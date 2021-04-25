@@ -1,0 +1,81 @@
+ground 1:
+	y = 190
+	x = 0 -> 1103
+ground 2:
+	y = 190
+	x = 1135 -> 1375
+ground 3:
+	y = 190
+	x = 1425 -> 2445
+
+ground 4:
+	y = 190
+	x = 2480 -> 3990
+
+block 1:
+	y = 141 -> 126
+	x = 255 -> 270
+
+block 2: x = 319 -> 400
+block 3: x = 1230 -> 1279
+block 4: x = 1503 -> 1520
+block 5: x = 1600 -> 1615
+block 6: x = 1695 -> 1710
+block 7: x = 1743 -> 1758
+block 8: x = 1790 -> 1805
+block 9: x = 1885 -> 1900
+block 10: x = 2063 -> 2093
+block 11: x = 2687 -> 2750
+
+up block 1:
+	y = 80 -> 62
+	x = 352 -> 367
+
+up block 2: x = 1279 -> 1407
+up block 3: x = 1455 -> 1520
+up block 4: x = 1743 -> 1758
+up block 5: x = 1935 -> 1985
+up block 6: x = 2047 -> 2110
+
+plum lar1: 
+	x = 737 -> 768
+	y = 190 -> 127
+plum lar2:
+	x = 912 -> 943
+plum m:
+	x = 607 -> 639
+	y = 190 -> 142
+plum s 1:
+	x = 447 -> 479
+	y = 190-> 158
+plum s 2:
+	x = 2607 -> 2638
+plum s 3:
+	x = 2864 -> 2894
+
+stair: 1 block : y += 15
+		 x += 16
+
+stair 1 : 
+	x = 2143
+	1/2 4x4
+
+stair2:
+	x = 2239
+	1/2 4x4 flip
+stair3:
+	x = 2368
+	1/2 4x4 + 1 cot. 4
+stair4:
+	x = 2480
+	1/2 4x4
+stair5:
+	x = 2894
+	1/2 8x8 + 1 cot 8
+flag:
+	x = 3168
+	y = 190 -> 176
+
+winning_door:
+	x = 3265 -> 3280
+	y = 190 -> 160
