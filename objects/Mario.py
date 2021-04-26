@@ -6,9 +6,6 @@ pygame.init()
 window = pygame.display.set_mode((500,500))
 pygame.display.set_caption("Mario")
 
-# run1 = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run1.png")), (48,48))
-# run2 = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run2.png")), (48,48))
-# run3 = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run2.png")), (48,48))
 walkRight = [pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run1.png")), (48,48)),
             pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run2.png")), (48,48)),
             pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run3.png")), (48,48))]
@@ -35,6 +32,7 @@ class Mario():
         self.horizonFacing = 'right'
         self.walkCount = 0 
         self.jumpCount = 10
+        self.hitBox = (self.x, self.y, 48, 48)
         
     def draw(self, window):
         if self.walkCount + 1 >= 9:
@@ -55,11 +53,15 @@ class Mario():
                 window.blit(char, (self.x, self.y))
             else: 
                 window.blit(pygame.transform.flip(char, True, False), (self.x, self.y))
+        
+    def draw_hit_box(self, window):
+        self.hitBox = (self.x, self.y, 48, 48)
+        pygame.draw.rect(window, [0, 255, 0], self.hitBox, 2) 
 
 def gameWindow():
     window.fill([255,255,255])
     player.draw(window)
-
+    player.draw_hit_box(window)
     pygame.display.update()
 
 player = Mario(200, 410, 64, 64)
