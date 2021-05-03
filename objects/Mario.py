@@ -1,6 +1,6 @@
 import pygame
 import os
-
+from pygame.locals import *
 pygame.init()
 
 window = pygame.display.set_mode((500,500))
@@ -57,6 +57,44 @@ class Mario():
     def draw_hit_box(self, window):
         self.hitBox = (self.x, self.y, 48, 48)
         pygame.draw.rect(window, [0, 255, 0], self.hitBox, 2) 
+    
+    def move(self):
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_LEFT] and self.x > self.vel:
+            self.x -= self.vel
+            self.isLeft = True
+            self.horizonFacing = 'left'
+            self.isRight = False
+        elif keys[pygame.K_RIGHT] and self.x < 500 - self.width - self.vel:
+            self.x += self.vel
+            self.isRight = True
+            self.horizonFacing = 'right'
+            self.isLeft = False
+        else:
+            self.isRight = False
+            self.isLeft = False
+            self.walkCount = 0
+
+        if not(self.isJump):
+            if keys[pygame.K_SPACE]:
+                self.isJump = True
+                self.isRight = False
+                self.isLeft = False
+                self.walkCount = 0
+        else:
+            if self.jumpCount >= -10:
+                neg = 1
+                if self.jumpCount < 0:
+                    neg = -1
+                self.y -= (self.jumpCount ** 2) * 0.5 * neg
+                self.jumpCount -= 1
+            else:
+                self.isJump = False
+                self.jumpCount = 10
+
+    def Mario_interaction(sefl):
+        pass
 
 def gameWindow():
     window.fill([255,255,255])
@@ -74,39 +112,6 @@ while run:
         if event.type == pygame.QUIT:
             run = False
         
-    keys = pygame.key.get_pressed()
-
-    if keys[pygame.K_LEFT] and player.x > player.vel:
-        player.x -= player.vel
-        player.isLeft = True
-        player.horizonFacing = 'left'
-        player.isRight = False
-    elif keys[pygame.K_RIGHT] and player.x < 500 - player.width - player.vel:
-        player.x += player.vel
-        player.isRight = True
-        player.horizonFacing = 'right'
-        player.isLeft = False
-    else:
-        player.isRight = False
-        player.isLeft = False
-        player.walkCount = 0
-
-    if not(player.isJump):
-        if keys[pygame.K_SPACE]:
-            player.isJump = True
-            player.isRight = False
-            player.isLeft = False
-            player.walkCount = 0
-    else:
-        if player.jumpCount >= -10:
-            neg = 1
-            if player.jumpCount < 0:
-                neg = -1
-            player.y -= (player.jumpCount ** 2) * 0.5 * neg
-            player.jumpCount -= 1
-        else:
-            player.isJump = False
-            player.jumpCount = 10
-
+    player.move()
     gameWindow()
 pygame.quit()
