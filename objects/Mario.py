@@ -106,7 +106,7 @@ player = Mario(200, 410, 64, 64)
 run  = True
 
 while run:
-    clock.tick(60)
+    clock.tick(50)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

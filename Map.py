@@ -1,14 +1,16 @@
 import pygame
 import sys
 import math
+import os
 from pygame.locals import *
 
 pygame.init()
 
-surface = pygame.display.set_mode((600, 300))
+surface = pygame.display.set_mode((600, 224))
 pygame.display.set_caption('Mario')
 
-map_image = pygame.image.load('IE221/map.png')
+map_image = pygame.image.load(os.path.join("img", "map.png"))
+
 h = map_image.get_height()
 print(h)
 bgX = 0
