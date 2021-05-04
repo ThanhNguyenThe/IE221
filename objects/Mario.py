@@ -3,20 +3,25 @@ import os
 from pygame.locals import *
 pygame.init()
 
-window = pygame.display.set_mode((500,500))
-pygame.display.set_caption("Mario")
+# window = pygame.display.set_mode((500,500))
+# pygame.display.set_caption("Mario")
 
-walkRight = [pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run1.png")), (48,48)),
-            pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run2.png")), (48,48)),
-            pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run3.png")), (48,48))]
+width_screen = 600
+height_screen = 224
+width = 16
+height = 16
 
-walkLeft = [pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run1.png")), (48,48)), True, False),
-            pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run2.png")), (48,48)), True, False),
-            pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run3.png")), (48,48)), True, False)]
+walkRight = [pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run1.png")), (width, height)),
+            pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run2.png")), (width, height)),
+            pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run3.png")), (width, height))]
 
-deadImage = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_die.png")), (48,48))
-jumpImage = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_jump.png")), (48,48))
-char = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_stand.png")), (48,48))
+walkLeft = [pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run1.png")), (width, height)), True, False),
+            pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run2.png")), (width, height)), True, False),
+            pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run3.png")), (width, height)), True, False)]
+
+deadImage = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_die.png")), (width, height))
+jumpImage = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_jump.png")), (width, height))
+char = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_stand.png")), (width, height))
 clock = pygame.time.Clock()
 
 class Mario():
@@ -25,7 +30,7 @@ class Mario():
         self.y = y
         self.width = width
         self.height = height
-        self.vel = 5
+        self.vel = 3
         self.isJump = False
         self.isLeft = False
         self.isRight = False
@@ -66,7 +71,7 @@ class Mario():
             self.isLeft = True
             self.horizonFacing = 'left'
             self.isRight = False
-        elif keys[pygame.K_RIGHT] and self.x < 500 - self.width - self.vel:
+        elif keys[pygame.K_RIGHT] and self.x < width_screen - self.width - self.vel:
             self.x += self.vel
             self.isRight = True
             self.horizonFacing = 'right'
@@ -87,7 +92,7 @@ class Mario():
                 neg = 1
                 if self.jumpCount < 0:
                     neg = -1
-                self.y -= (self.jumpCount ** 2) * 0.5 * neg
+                self.y -= (self.jumpCount ** 2) * 0.1 * neg
                 self.jumpCount -= 1
             else:
                 self.isJump = False
@@ -96,22 +101,22 @@ class Mario():
     def Mario_interaction(sefl):
         pass
 
-def gameWindow():
-    window.fill([255,255,255])
-    player.draw(window)
-    player.draw_hit_box(window)
-    pygame.display.update()
+# def gameWindow():
+#     window.fill([255,255,255])
+#     player.draw(window)
+#     # player.draw_hit_box(window)
+#     pygame.display.update()
 
-player = Mario(200, 410, 64, 64)
-run  = True
+# player = Mario(200, 410, 64, 64)
+# run  = True
 
-while run:
-    clock.tick(50)
+# while run:
+#     clock.tick(60)
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             run = False
         
-    player.move()
-    gameWindow()
-pygame.quit()
+    # player.move()
+    # gameWindow()
+# pygame.quit()

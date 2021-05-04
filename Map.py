@@ -12,7 +12,7 @@ pygame.display.set_caption('Mario')
 map_image = pygame.image.load(os.path.join("img", "map.png"))
 
 h = map_image.get_height()
-print(h)
+# print(h)
 bgX = 0
 FPS = 60
 fpsClock = pygame.time.Clock()
@@ -92,22 +92,22 @@ class Map:
             pygame.draw.rect(map_image, (255, 0, 0), i)
 
 m = Map()
-for i in m.block:
-    pygame.draw.rect(map_image, (255, 0, 0), i)
+# for i in m.block:
+#     pygame.draw.rect(map_image, (255, 0, 0), i)
 
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             pygame.quit()
+#             sys.exit()
 
-    m.drawMap()
-    bgX -= 3
-    if bgX < map_image.get_width() * -1:
-        bgX = map_image.get_width()
+#     m.drawMap()
+#     bgX -= 3
+#     if bgX < map_image.get_width() * -1:
+#         bgX = map_image.get_width()
 
-    pygame.display.update()
-    fpsClock.tick(FPS)
+#     pygame.display.update()
+#     fpsClock.tick(FPS)
 
 
     
