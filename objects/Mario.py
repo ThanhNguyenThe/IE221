@@ -98,7 +98,17 @@ class Mario():
                 self.isJump = False
                 self.jumpCount = 10
 
-    def Mario_interaction(sefl):
+    def Mario_interaction(self, block):
+        for i in range(self.x, self.x + 48):
+            for j in block: 
+                if i in range(j[0], j[0] + j[2]): 
+                    if self.y < j[1] + j[3]: #under block
+                        self.y = j[1] + j[3]
+                
+                    if self.y < j[1]: #on block
+                        self.y = j[1]
+                    
+                #side block
         pass
 
 # def gameWindow():

@@ -20,7 +20,7 @@ player = Mario(0, 190-16, 16, 16)
 
 
 run = True 
-
+map.drawBlock()
 while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -31,6 +31,7 @@ while run:
     player.move()
     map.drawMap()
     player.draw(surface)
+    # player.Mario_interaction(map.block)
     bgX -= 3
     if bgX < map_image.get_width() * -1:
         bgX = map_image.get_width()
