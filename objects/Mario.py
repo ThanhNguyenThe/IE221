@@ -37,7 +37,7 @@ class Mario():
         self.horizonFacing = 'right'
         self.walkCount = 0 
         self.jumpCount = 10
-        self.hitBox = (self.x, self.y, 48, 48)
+        self.hitBox = (self.x, self.y, self.x + 32, self.y + 32)
         
     def draw(self, window):
         if self.walkCount + 1 >= 9:
@@ -60,8 +60,8 @@ class Mario():
                 window.blit(pygame.transform.flip(char, True, False), (self.x, self.y))
         
     def draw_hit_box(self, window):
-        self.hitBox = (self.x, self.y, 48, 48)
-        pygame.draw.rect(window, [0, 255, 0], self.hitBox, 2) 
+        hitBox = (self.x, self.y, 32, 32)
+        pygame.draw.rect(window, [0, 255, 0], hitBox, 2) 
     
     def move(self):
         keys = pygame.key.get_pressed()
@@ -92,30 +92,46 @@ class Mario():
                 neg = 1
                 if self.jumpCount < 0:
                     neg = -1
-                self.y -= (self.jumpCount ** 2) * 0.1 * neg
+                self.y -= (self.jumpCount ** 2) * 0.5 * neg
                 self.jumpCount -= 1
             else:
                 self.isJump = False
                 self.jumpCount = 10
+    def Mario_interaction(self, bg):
+        self.hitBox = (abs(bg.bgX) + self.x, self.y, abs(bg.bgX) + self.x + 32, self.y + 32)          
+        for i in bg.block:
+            if (self.hitBox[0] < i[0] + i[2] and
+                self.hitBox[2] > i[0] and
+                self.hitBox[1] < i[1] + i[3] and
+                self.hitBox[3] > i[1]):
+                print("true")
 
-    def Mario_interaction(self, block):
-        for i in range(self.x, self.x + 48):
-            for j in block: 
-                if i in range(j[0], j[0] + j[2]): 
-                    if self.y < j[1] + j[3]: #under block
-                        self.y = j[1] + j[3]
-                
-                    if self.y < j[1]: #on block
-                        self.y = j[1]
-                    
-                #side block
+
+        # for i in block:
+        #     if self.y in range(i[1], i[1] + i[3]):
+        #         # right interaction
+        #         if (self.x + 16) > i[0]:
+        #             self.x = i[0]
+        #         # left interaction
+        #         elif (self.x < i[0] + i[2]):
+        #             self.x = i[0] + i[2]
+        #     elif self.x in range(i[0], i[0] + i[2]):
+        #         # above
+        #         if (self.y + 16) < i[1]:
+        #             self.y = i[1]
+        #         # under
+        #         elif self.y < (i[1] + i[3]):
+        #             self.y = i[1] + i[3]
+        #     else: 
+        #         pass
         pass
 
-# def gameWindow():
-#     window.fill([255,255,255])
-#     player.draw(window)
-#     # player.draw_hit_box(window)
-#     pygame.display.update()
+
+def gameWindow():
+    window.fill([255,255,255])
+    player.draw(window)
+    # player.draw_hit_box(window)
+    pygame.display.update()
 
 # player = Mario(200, 410, 64, 64)
 # run  = True
@@ -127,6 +143,6 @@ class Mario():
 #         if event.type == pygame.QUIT:
 #             run = False
         
-    # player.move()
-    # gameWindow()
+#     player.move()
+#     gameWindow()
 # pygame.quit()

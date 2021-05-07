@@ -8,33 +8,34 @@ from Map import *
 
 pygame.init()
 
-width_screen = 600
-height_screen = 224
+width_screen = 800
+height_screen = 448
 width = 16
 height = 16
-
-surface = pygame.display.set_mode((width_screen, height_screen))
+FPS = 80
+screen = pygame.display.set_mode((width_screen, height_screen))
 pygame.display.set_caption('Mario')
-map = Map()
-player = Mario(0, 190-16, 16, 16)
+bg = Map()
+player = Mario(0, 350, 32, 32)
 
 
-run = True 
-map.drawBlock()
+run = True
+bg.drawBlock()
+
 while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
 
-
+    bg.drawMap()
+    bg.bgX = -800
+    player.draw_hit_box(screen)
     player.move()
-    map.drawMap()
-    player.draw(surface)
-    # player.Mario_interaction(map.block)
-    bgX -= 3
-    if bgX < map_image.get_width() * -1:
-        bgX = map_image.get_width()
+    player.draw(screen)
+    player.Mario_interaction(bg)
 
+    if bg.bgX < map_image.get_width() * -1:
+        bg.bgX = map_image.get_width()
     pygame.display.update()
     fpsClock.tick(FPS)
