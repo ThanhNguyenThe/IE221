@@ -30,14 +30,15 @@ class Mario():
         self.y = y
         self.width = width
         self.height = height
-        self.vel = 3
+        self.vel_x = 3
+        self.vel_y = 3
         self.isJump = False
         self.isLeft = False
         self.isRight = False
         self.horizonFacing = 'right'
         self.walkCount = 0 
         self.jumpCount = 10
-        self.hitBox = (self.x, self.y, self.x + 32, self.y + 32)
+
         
     def draw(self, window):
         if self.walkCount + 1 >= 9:
@@ -63,16 +64,15 @@ class Mario():
         hitBox = (self.x, self.y, 32, 32)
         pygame.draw.rect(window, [0, 255, 0], hitBox, 2) 
     
-    def move(self):
+    def move(self, bg):
         keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_LEFT] and self.x > self.vel:
-            self.x -= self.vel
+        if keys[pygame.K_LEFT] and self.x > self.vel_x:
+            self.x -= self.vel_x
             self.isLeft = True
             self.horizonFacing = 'left'
             self.isRight = False
-        elif keys[pygame.K_RIGHT] and self.x < width_screen - self.width - self.vel:
-            self.x += self.vel
+        elif keys[pygame.K_RIGHT] and self.x < width_screen - self.width - self.vel_x:
+            self.x += self.vel_x
             self.isRight = True
             self.horizonFacing = 'right'
             self.isLeft = False
@@ -88,43 +88,42 @@ class Mario():
                 self.isLeft = False
                 self.walkCount = 0
         else:
-            if self.jumpCount >= -10:
-                neg = 1
-                if self.jumpCount < 0:
-                    neg = -1
-                self.y -= (self.jumpCount ** 2) * 0.5 * neg
-                self.jumpCount -= 1
-            else:
+            self.vel_y = -15
+            if keys[pygame.K_SPACE] == False:
                 self.isJump = False
-                self.jumpCount = 10
-    def Mario_interaction(self, bg):
-        self.hitBox = (abs(bg.bgX) + self.x, self.y, abs(bg.bgX) + self.x + 32, self.y + 32)          
+
+        #add gravity
+        self.vel_y += 1
+        if self.vel_y > 10:
+	        self.vel_y = 10
+
+        self.y += self.vel_y
+        if self.y > 448 : 
+            self.y = 416
+        
+        #collision
+        hitBox = pygame.Rect(abs(bg.bgX) + self.x, self.y, 32, 32)
+        keys = pygame.key.get_pressed()   
         for i in bg.block:
-            if (self.hitBox[0] < i[0] + i[2] and
-                self.hitBox[2] > i[0] and
-                self.hitBox[1] < i[1] + i[3] and
-                self.hitBox[3] > i[1]):
-                print("true")
+    
+            i = pygame.Rect(i[0], i[1], i[2], i[3])
+            #x collision
+            if (i[0] == hitBox[0] + hitBox[2] or i[0] + i[2] == hitBox[0]):
+                self.vel_x = 0
+                print(1)
+            else:
+                self.vel_x = 3
+            #y collision
+            if i.colliderect(hitBox[0], self.y + self.vel_y, 32, 32):
+                if self.vel_y < 0:
+                    self.y = i[1] + i[3]
+                    self.vel_y = 0
+                elif self.vel_y >= 0:
+                    self.y = i[1] - 32
+                    self.vel_y = 0
 
-
-        # for i in block:
-        #     if self.y in range(i[1], i[1] + i[3]):
-        #         # right interaction
-        #         if (self.x + 16) > i[0]:
-        #             self.x = i[0]
-        #         # left interaction
-        #         elif (self.x < i[0] + i[2]):
-        #             self.x = i[0] + i[2]
-        #     elif self.x in range(i[0], i[0] + i[2]):
-        #         # above
-        #         if (self.y + 16) < i[1]:
-        #             self.y = i[1]
-        #         # under
-        #         elif self.y < (i[1] + i[3]):
-        #             self.y = i[1] + i[3]
-        #     else: 
-        #         pass
-        pass
+            
+                    
 
 
 def gameWindow():

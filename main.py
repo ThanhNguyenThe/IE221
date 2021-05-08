@@ -16,11 +16,10 @@ FPS = 80
 screen = pygame.display.set_mode((width_screen, height_screen))
 pygame.display.set_caption('Mario')
 bg = Map()
-player = Mario(0, 350, 32, 32)
+player = Mario(0, 100, 32, 32)
 
 
 run = True
-bg.drawBlock()
 
 while run:
     for event in pygame.event.get():
@@ -29,11 +28,10 @@ while run:
             sys.exit()
 
     bg.drawMap()
-    bg.bgX = -800
+    bg.bgX = -5000
     player.draw_hit_box(screen)
-    player.move()
+    player.move(bg)
     player.draw(screen)
-    player.Mario_interaction(bg)
 
     if bg.bgX < map_image.get_width() * -1:
         bg.bgX = map_image.get_width()
