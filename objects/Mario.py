@@ -105,16 +105,13 @@ class Mario():
         hitBox = pygame.Rect(abs(bg.bgX) + self.x, self.y, 32, 32)
         keys = pygame.key.get_pressed()   
         for i in bg.block:
-    
             i = pygame.Rect(i[0], i[1], i[2], i[3])
             #x collision
-            if (i[0] == hitBox[0] + hitBox[2] or i[0] + i[2] == hitBox[0]):
-                self.vel_x = 0
-                print(1)
-            else:
-                self.vel_x = 3
+            # if i.colliderect(hitBox[0], self.y , 32, 32):
+            #     if hitBox[0] >= i[0]:
+            #         self.vel_x = 0
             #y collision
-            if i.colliderect(hitBox[0], self.y + self.vel_y, 32, 32):
+            if i.colliderect(hitBox[0], self.y , 32, 32):
                 if self.vel_y < 0:
                     self.y = i[1] + i[3]
                     self.vel_y = 0

@@ -95,6 +95,17 @@ class Map:
         for i in self.block:
             pygame.draw.rect(map_image, (255, 0, 0), i)
 
+    def scrollBg(self, player):
+        key = pygame.key.get_pressed()
+        if player.x > 300 and key[pygame.K_RIGHT]:
+            self.bgX -= 5
+        elif player.x < 100 and key[pygame.K_LEFT]:
+            self.bgX += 5
+        
+        if self.bgX <= -5950:
+            self.bgX = -5950
+        if self.bgX >= 0:
+            self.bgX = 0
 m = Map()
 # for i in m.winning_door:
 #     pygame.draw.rect(map_image, (255, 0, 0), i)

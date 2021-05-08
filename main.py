@@ -28,12 +28,10 @@ while run:
             sys.exit()
 
     bg.drawMap()
-    bg.bgX = -5000
+    bg.scrollBg(player)
     player.draw_hit_box(screen)
     player.move(bg)
     player.draw(screen)
 
-    if bg.bgX < map_image.get_width() * -1:
-        bg.bgX = map_image.get_width()
     pygame.display.update()
     fpsClock.tick(FPS)
