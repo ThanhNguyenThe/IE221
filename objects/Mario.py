@@ -8,8 +8,8 @@ pygame.init()
 
 width_screen = 600
 height_screen = 224
-width = 16
-height = 16
+width = 32
+height = 32
 
 walkRight = [pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run1.png")), (width, height)),
             pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run2.png")), (width, height)),
