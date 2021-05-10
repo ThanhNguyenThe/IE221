@@ -35,5 +35,5 @@ while run:
     player.move(bg)
     player.draw(screen)
     bg.win(player)
-    pygame.display.update()
     fpsClock.tick(FPS)
+    pygame.display.update()
