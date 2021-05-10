@@ -83,8 +83,22 @@ class Map:
     (6016, 126, 60, 256),
     ]
 
-    winning_door = [(6530, 320, 30, 60)]
-
+    gold_point = [
+        (512, 256, 30, 30),
+        (675, 256, 30, 30),
+        (735, 256, 30, 30),
+        (2498, 256, 30, 30),
+        (705, 129, 30, 30),
+        (3010, 129, 30, 30),
+        (3392, 256, 30, 30),
+        (3488, 256, 30, 30),
+        (3584, 256, 30, 30),
+        (3486, 129, 30, 30),
+        (4128, 129, 60, 30),
+        (5441, 256, 30, 30)
+    ]
+    winning_door = (6530, 320, 30, 60)   
+    flag = (6349, 67, 6, 290)
 
     def __init__(self):
         pass
@@ -106,7 +120,32 @@ class Map:
             self.bgX = -5950
         if self.bgX >= 0:
             self.bgX = 0
-m = Map()
+
+    def gold_collect(self, player):
+        gold_image = pygame.transform.scale(pygame.image.load(os.path.join('img', 'gold.png')), (30, 30))
+        hitBox = pygame.Rect(abs(self.bgX) + player.x, player.y, 32, 32)
+        for i in self.gold_point:
+            i = pygame.Rect(i)
+            if i.colliderect(hitBox):
+                map_image.blit(gold_image, (i[0], i[1] - 40, 30, 30))
+        pass
+    
+    def win(self, player):
+        flag = pygame.Rect(self.flag)
+        flag_img = pygame.transform.scale(pygame.image.load(os.path.join('img', 'flag.png')), (40, 40))
+        hitBox = pygame.Rect(abs(self.bgX) + player.x, player.y, 32, 32)
+        winning_door = pygame.Rect(self.winning_door)
+        top_score = [0]
+        if flag.colliderect(hitBox):
+            score = 10 * player.y
+            top_score.append(score)
+        for i in range(0, max(top_score), 10):
+            map_image.blit(flag_img, (6320, 357 - i, 40, 40))
+        if winning_door.colliderect(hitBox):
+            pass
+            #stop game
+        return max(top_score)
+# m = Map()
 # for i in m.winning_door:
 #     pygame.draw.rect(map_image, (255, 0, 0), i)
 

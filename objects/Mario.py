@@ -59,6 +59,10 @@ class Mario():
                 window.blit(char, (self.x, self.y))
             else: 
                 window.blit(pygame.transform.flip(char, True, False), (self.x, self.y))
+        #Mario Die
+        dead_img = pygame.image.load('img/mario_die.png')
+        if self.y + 32 == 448:
+            window.blit(dead_img, (self.x, self.y))
         
     def draw_hit_box(self, window):
         hitBox = (self.x, self.y, 32, 32)
@@ -102,24 +106,44 @@ class Mario():
             self.y = 416
         
         #collision
+        hit_box = (abs(bg.bgX) + self.x, self.y, 32, 32)
         hitBox = pygame.Rect(abs(bg.bgX) + self.x, self.y, 32, 32)
-        keys = pygame.key.get_pressed()   
+        keys = pygame.key.get_pressed()
+        hit_block = []
+
         for i in bg.block:
             i = pygame.Rect(i[0], i[1], i[2], i[3])
+            if i.colliderect(hit_box[0], self.y , 32, 32):
+                hit_block.append(i)
+
+        for i in hit_block:
             #x collision
-            # if i.colliderect(hitBox[0], self.y , 32, 32):
-            #     if hitBox[0] >= i[0]:
-            #         self.vel_x = 0
+            #right
+            if i.colliderect(hitBox[0] + self.vel_x, self.y + 15 , 32, 10):
+                self.vel_x = 0
+                self.x = hit_box[0] - abs(bg.bgX) - 32
+                self.y = i[1] + i[3] - 32
+                print(0)
+            #left
+            if i.colliderect(hitBox[0] - self.vel_x, self.y , 32, 10):    
+                self.vel_x = 0
+                self.x = hit_box[0] - abs(bg.bgX) + 5
+                self.y = i[1] + i[3] - 32
+            else:
+                self.vel_x = 3
             #y collision
-            if i.colliderect(hitBox[0], self.y , 32, 32):
+            if i.colliderect(hitBox[0], self.y + self.vel_y, 32, 32):
+                #under
                 if self.vel_y < 0:
                     self.y = i[1] + i[3]
                     self.vel_y = 0
+                #above
                 elif self.vel_y >= 0:
                     self.y = i[1] - 32
                     self.vel_y = 0
-
             
+
+
                     
 
 
