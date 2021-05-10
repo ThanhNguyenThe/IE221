@@ -3,6 +3,7 @@ import sys
 import math
 import os
 from pygame.locals import *
+from objects.flag import *
 
 pygame.init()
 
@@ -104,7 +105,7 @@ class Map:
         pass
     def drawMap(self):
         surface.blit(map_image, (self.bgX, 0))
-        pygame.display.update()
+        # pygame.display.update()
     def drawBlock(self):
         for i in self.block:
             pygame.draw.rect(map_image, (255, 0, 0), i)
@@ -131,16 +132,34 @@ class Map:
         pass
     
     def win(self, player):
-        flag = pygame.Rect(self.flag)
-        flag_img = pygame.transform.scale(pygame.image.load(os.path.join('img', 'flag.png')), (40, 40))
+        flag_pole = pygame.Rect(self.flag)
+        flag_img = pygame.transform.scale(pygame.image.load(os.path.join('img', 'flag.png')), (40, 32))
         hitBox = pygame.Rect(abs(self.bgX) + player.x, player.y, 32, 32)
         winning_door = pygame.Rect(self.winning_door)
         top_score = [0]
-        if flag.colliderect(hitBox):
+        h_flag = []
+        flag = Flag(6320, 352)
+        if flag_pole.colliderect(hitBox):
             score = 10 * player.y
+            h_flag.append(player.y)
             top_score.append(score)
-        for i in range(0, max(top_score), 10):
-            map_image.blit(flag_img, (6320, 357 - i, 40, 40))
+            print(h_flag[0])
+            while flag.rect.y > h_flag[0]:
+                flag.move(1)
+                flag.update()
+                map_image.blit(flag.image, (flag.rect))
+
+            # x_flag = 6320
+            # y_flag = 352
+            # while y_flag > flag_pos:
+            #     map_image.blit(flag_img, (x_flag, y_flag))
+            #     y_flag -= 2
+
+            #     pygame.display.update()
+
+        
+        
+        
         if winning_door.colliderect(hitBox):
             pass
             #stop game
