@@ -4,6 +4,7 @@ import math
 import os
 from pygame.locals import *
 from objects.Mario import *
+from objects.mushroom import *
 from Map import *
 
 pygame.init()
@@ -17,24 +18,27 @@ screen = pygame.display.set_mode((width_screen, height_screen))
 pygame.display.set_caption('Mario')
 bg = Map()
 player = Mario(0, 100, 32, 32)
-
+mushroom = Mushroom(0, 352, 32, 32)
 
 run = True
 bg.bgX = 0
 for i in bg.gold_point:
-    pygame.draw.rect(map_image , (0, 255, 0), i, width = 2)
+    pygame.draw.rect(map_image , (0, 255, 0), (i[0], i[1] - 2, i[2], i[3]), width = 2)
 while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
     bg.drawMap()
-    bg.drawBlock()
+    # bg.drawBlock()
     bg.scrollBg(player)
     bg.gold_collect(player)
     player.draw_hit_box(screen)
     player.move(bg)
     player.draw(screen)
+    mushroom.draw_hit_box(screen)
+    mushroom.draw(screen)
+    mushroom.update()
     bg.win(player)
     fpsClock.tick(FPS)
     pygame.display.update()
