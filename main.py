@@ -20,16 +20,14 @@ player = Mario(0, 100, 32, 32)
 
 
 run = True
-bg.bgX = 0
-for i in bg.gold_point:
-    pygame.draw.rect(map_image , (0, 255, 0), i, width = 2)
+bg.bgX = -5900
+
 while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
     bg.drawMap()
-    bg.drawBlock()
     bg.scrollBg(player)
     bg.gold_collect(player)
     player.draw_hit_box(screen)

@@ -133,7 +133,7 @@ class Map:
                 map_image.blit(gold_image, (i[0], i[1] - 40, 30, 30))
         pass
     
-    def win(self, player):
+    def win(self, player, flag):
         flag_pole = pygame.Rect(self.flag)
         flag_img = pygame.transform.scale(pygame.image.load(os.path.join('img', 'flag.png')), (40, 32))
         hitBox = pygame.Rect(abs(self.bgX) + player.x, player.y, 32, 32)

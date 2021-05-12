@@ -151,10 +151,6 @@ class Mario():
                     self.vel = 0
                     
            
-                
-
-
-
             # #x collision
             # #right
             # if i.colliderect(hitBox[0], self.y, 32, 32):
