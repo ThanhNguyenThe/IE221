@@ -1,0 +1,5 @@
+thông tin người chơi, góc trái màn hình
+hàm tính toán thời gian phá đảo map
+stop người chơi giữa chừng bữa sau, resume chơi tiếp
+nhảy qua cái cửa 3 4 lần thì về đích
+thống kê số lượng người chơi
