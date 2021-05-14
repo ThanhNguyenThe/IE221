@@ -37,8 +37,9 @@ while run:
                 message_to_screen('paused', black, screen)
             if keys[pygame.K_c]: #continue
                 pause = False
-                        
-    if not pause:
+    if bg.win(player, screen):
+        message_to_screen('You win', white, screen)           
+    if not pause and not bg.win(player, screen):
         bg.drawMap()
         bg.scrollBg(player)
         bg.gold_collect(player) 
@@ -51,7 +52,6 @@ while run:
         mushroom.draw(screen)
         mushroom.update()
 
-        bg.win(player)
         flag.update(player, bg, screen)
     fpsClock.tick(FPS)
     pygame.display.update()

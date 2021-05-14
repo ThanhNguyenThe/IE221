@@ -4,7 +4,7 @@ import math
 import os
 from pygame.locals import *
 from objects.flag import *
-
+from GameControl import *
 pygame.init()
 
 surface = pygame.display.set_mode((800, 448))
@@ -121,8 +121,8 @@ class Map:
         elif player.x < 100 and key[pygame.K_LEFT]:
             self.bgX += 5
         
-        if self.bgX <= -5950:
-            self.bgX = -5950
+        if self.bgX <= -6200: #-5950
+            self.bgX = -6200
         if self.bgX >= 0:
             self.bgX = 0
 
@@ -135,12 +135,19 @@ class Map:
                 map_image.blit(gold_image, (i[0], i[1] - 40, 30, 30))
         pass
     
-    def win(self, player):
+    def win(self, player, screen):
         hitBox = pygame.Rect(abs(self.bgX) + player.x, player.y, 32, 32)
         winning_door = pygame.Rect(self.winning_door)
-        if winning_door.colliderect(hitBox): # sua lai
-            self.time_collide -= 1
-        
+        if hitBox[0] >= winning_door[0] + winning_door[2] and hitBox[1] + 32 < winning_door[1]:
+            if hitBox[0] <= winning_door[0] + winning_door[2] and hitBox[1] + 32 < winning_door[1]:
+                self.time_collide -= 1
+                if self.time_collide < 0:
+                    self.time_collide = 0
+        print(self.time_collide)
+        if self.time_collide == 0:
+            if hitBox.colliderect(winning_door):
+                return True
+        return False
             #stop game
 # m = Map()
 # for i in m.winning_door:
