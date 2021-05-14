@@ -6,7 +6,7 @@ from pygame.locals import *
 from objects.Mario import *
 from objects.mushroom import *
 from Map import *
-
+from GameControl import *
 pygame.init()
 
 width_screen = 800
@@ -15,38 +15,43 @@ width = 32
 height = 32
 FPS = 80
 screen = pygame.display.set_mode((width_screen, height_screen))
-pygame.display.set_caption('Mario')
+pygame.display .set_caption('Mario')
 bg = Map()
 player = Mario(0, 100, 32, 32)
 mushroom = Mushroom(0, 352, 32, 32)
-
+flag = Flag(map_image)
 run = True
-<<<<<<< HEAD
 bg.bgX = -5900
 
-=======
-bg.bgX = 0
-for i in bg.gold_point:
-    pygame.draw.rect(map_image , (0, 255, 0), (i[0], i[1] - 2, i[2], i[3]), width = 2)
->>>>>>> 6791ca63251f2e32ee3f6e6d86ad6313d9931c7f
+pause = False
+
 while run:
+    keys = pygame.key.get_pressed()
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-    bg.drawMap()
-<<<<<<< HEAD
-=======
-    # bg.drawBlock()
->>>>>>> 6791ca63251f2e32ee3f6e6d86ad6313d9931c7f
-    bg.scrollBg(player)
-    bg.gold_collect(player)
-    player.draw_hit_box(screen)
-    player.move(bg)
-    player.draw(screen)
-    mushroom.draw_hit_box(screen)
-    mushroom.draw(screen)
-    mushroom.update()
-    bg.win(player)
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if keys[pygame.K_p]: #pause
+                pause = True
+                screen.fill((255, 255, 255))
+                message_to_screen('paused', black, screen)
+            if keys[pygame.K_c]: #continue
+                pause = False
+                        
+    if not pause:
+        bg.drawMap()
+        bg.scrollBg(player)
+        bg.gold_collect(player) 
+
+        player.draw_hit_box(screen)
+        player.move(bg)
+        player.draw(screen)
+
+        mushroom.draw_hit_box(screen)
+        mushroom.draw(screen)
+        mushroom.update()
+
+        bg.win(player)
+        flag.update(player, bg, screen)
     fpsClock.tick(FPS)
     pygame.display.update()

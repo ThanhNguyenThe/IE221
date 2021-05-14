@@ -77,8 +77,6 @@ class Mario(EntityBase):
         
 
 
-
-
     def move(self, bg):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and self.x > self.vel_x:
@@ -132,7 +130,6 @@ class Mario(EntityBase):
             if i.colliderect(hit_box[0], self.y , 32, 32):
                 hit_block.append(i)
 
-<<<<<<< HEAD
         for i in bg.ground:
             i = pygame.Rect(i[0], i[1], i[2], i[3])
             if i.colliderect(hit_box[0], self.y , 32, 32):
@@ -164,7 +161,6 @@ class Mario(EntityBase):
                     
            
             # #x collision
-=======
         # for i in bg.ground:
         #     i = pygame.Rect(i[0], i[1], i[2], i[3])
         #     if i.colliderect(hit_box[0], self.y , 32, 32):
@@ -183,7 +179,6 @@ class Mario(EntityBase):
             # if i.colliderect(hitBox[0], self.y , 32, 32):
             #     if hitBox[0] >= i[0]:
             #         self.vel_x = 0
->>>>>>> 6791ca63251f2e32ee3f6e6d86ad6313d9931c7f
             # #right
             # if i.colliderect(hitBox[0] + self.vel_x, self.y + 15, 32, 32):
             #     # self.vel_x = 0
@@ -247,12 +242,6 @@ class Mario(EntityBase):
         #     # if i.colliderect(hitBox[0], self.y , 32, 32):
                   
         
-            
-            
-
-
-                    
-
 
 # def gameWindow():
 #     window.fill([255,255,255])

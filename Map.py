@@ -20,14 +20,15 @@ FPS = 60
 fpsClock = pygame.time.Clock()
 class Map:
     bgX = 0
-    block = [
-    # ground = [
+    time_collide = 3
+    # block = [
+    ground = [
     (0, 384, 2206, 64), #ground
     (2270, 384, 480, 64),
     (2850, 384, 2040, 64),
     (4960, 384, 3020, 64),
-
-    # block = [
+    ]
+    block = [
 
     (512, 256, 30, 30), #block
     (640, 256, 162, 30),
@@ -103,7 +104,6 @@ class Map:
         (5441, 258, 30, 32)
     ]
     winning_door = (6530, 320, 30, 60)   
-    flag = (6349, 67, 6, 290)
 
     def __init__(self):
         pass
@@ -135,38 +135,13 @@ class Map:
                 map_image.blit(gold_image, (i[0], i[1] - 40, 30, 30))
         pass
     
-    def win(self, player, flag):
-        flag_pole = pygame.Rect(self.flag)
-        flag_img = pygame.transform.scale(pygame.image.load(os.path.join('img', 'flag.png')), (40, 32))
+    def win(self, player):
         hitBox = pygame.Rect(abs(self.bgX) + player.x, player.y, 32, 32)
         winning_door = pygame.Rect(self.winning_door)
-        top_score = [0]
-        h_flag = []
-        flag = Flag(6320, 352)
-        if flag_pole.colliderect(hitBox):
-            score = 10 * player.y
-            h_flag.append(player.y)
-            top_score.append(score)
-            while flag.rect.y > h_flag[0]:
-                flag.move(1)
-                flag.update()
-                map_image.blit(flag.image, (flag.rect))
-
-            # x_flag = 6320
-            # y_flag = 352
-            # while y_flag > flag_pos:
-            #     map_image.blit(flag_img, (x_flag, y_flag))
-            #     y_flag -= 2
-
-            #     pygame.display.update()
-
+        if winning_door.colliderect(hitBox): # sua lai
+            self.time_collide -= 1
         
-        
-        
-        if winning_door.colliderect(hitBox):
-            pass
             #stop game
-        return max(top_score)
 # m = Map()
 # for i in m.winning_door:
 #     pygame.draw.rect(map_image, (255, 0, 0), i)
