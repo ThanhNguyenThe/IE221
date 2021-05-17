@@ -70,11 +70,7 @@ class Mario(EntityBase):
         
     def draw_hit_box(self, window):
         hitBox = (self.x, self.y, 32, 32)
-        pygame.draw.rect(window, [0, 255, 0], hitBox, 2) 
-    
-    def die_jump(self):
-        pass
-        
+        pygame.draw.rect(window, [0, 255, 0], hitBox, 2)     
 
 
     def move(self, bg):
@@ -205,43 +201,16 @@ class Mario(EntityBase):
                     self.vel_y = 0
 
 
-        # for i in bg.block:
-            
-        #     i = pygame.Rect(i[0], i[1], i[2], i[3])
-        #     x_past = self.x
-        #     y_past = self.y            
-
-        #     distance_x = i.centerx - hitBox.centerx
-            
-        #     #x collision
-        #     # if i.colliderect(hitBox[0], self.y , 32, 32):
-        #     #     if hitBox[0] >= i[0]:
-        #     #         self.vel_x = 0
-        #     #right
-        #     if i.colliderect(hitBox[0], self.y , 32, 32) and (self.x + abs(bg.bgX) + 32) > i[0]:
-        #         self.x -= 1
-        #         # if keys[K_LEFT]:
-        #         #     self.vel_x = 3
-        #     if i.colliderect(hitBox[0], self.y , 32, 32) and (self.x + bg.bgX) < (i[0] + i[2]):
-        #         self.x += 1
-        #         # if keys[K_RIGHT]:
-        #         #     self.vel_x = 3
-
-        #         # self.vel_x = 3
-        #     #     print(0)
-        #     if i.colliderect(hitBox[0], self.y + self.vel_y, 32, 32):
-        #         #under
-        #         if self.vel_y < 0:
-        #             self.y = i[1] + i[3]
-        #             self.vel_y = 0
-        #         #above
-        #         elif self.vel_y >= 0:
-        #             self.y = i[1] - 32
-        #             self.vel_y = 0
-        #     #y collision
-        #     # if i.colliderect(hitBox[0], self.y , 32, 32):
-                  
-        
+    def dead(self, enemy, window, bg):
+        img = pygame.image.load(os.join.path('img', 'mario_die.png'))
+        if self.y >= 416:
+            window.blit(img, (self.x, self.y))
+            return True
+        hit_box = (abs(bg.bgX) + self.x, self.y, 32, 32)
+        if hit_box.colliderect(enemy.hitbox):
+            window.blit(img, (self.x, self.y))
+            return True
+        return False
 
 # def gameWindow():
 #     window.fill([255,255,255])

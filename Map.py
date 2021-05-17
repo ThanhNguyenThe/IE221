@@ -135,7 +135,7 @@ class Map:
                 map_image.blit(gold_image, (i[0], i[1] - 40, 30, 30))
         pass
     
-    def win(self, player, screen):
+    def win(self, player):
         hitBox = pygame.Rect(abs(self.bgX) + player.x, player.y, 32, 32)
         winning_door = pygame.Rect(self.winning_door)
         if hitBox[0] >= winning_door[0] + winning_door[2] and hitBox[1] + 32 < winning_door[1]:
@@ -143,12 +143,12 @@ class Map:
                 self.time_collide -= 1
                 if self.time_collide < 0:
                     self.time_collide = 0
-        print(self.time_collide)
         if self.time_collide == 0:
             if hitBox.colliderect(winning_door):
                 return True
         return False
             #stop game
+    
 # m = Map()
 # for i in m.winning_door:
 #     pygame.draw.rect(map_image, (255, 0, 0), i)
