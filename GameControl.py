@@ -15,13 +15,13 @@ text_font = pygame.font.SysFont(None, 40)
 white = (255, 255, 255)
 black = (0, 0, 0)
 pause_sound = pygame.mixer.Sound('music/alaba.wav')
-def pause_Sound():
-    pause_sound.play()
+coin_sound = pygame.mixer.Sound('music/coin.wav')
 def message_to_screen(msg, color, screen, pos):
     screen_text = text_font.render(msg, 1, color)
     screen.blit(screen_text, pos)
 
-
+def score():
+    pass
 def win_game(bg, player):
         hitBox = pygame.Rect(abs(bg.bgX) + player.x, player.y, 32, 32)
         winning_door = pygame.Rect(bg.winning_door)

@@ -11,7 +11,6 @@ walk = [pygame.transform.scale(pygame.image.load(os.path.join("img", "mushroom1.
 die = pygame.transform.scale(pygame.image.load(os.path.join("img", "mushroom_die.png")), (width, height))
 
 class Mushroom(EntityBase):
-
     def __init__(self, x, y, w, h):
         self.x = x
         self.y = y
@@ -21,17 +20,18 @@ class Mushroom(EntityBase):
         self.isDie = False
         self.walkCount = 0
     
-    def draw(self, window):
+    def draw(self, screen, bg):
         if self.walkCount + 1 >= 4:
             self.walkCount = 0
-        window.blit(walk[self.walkCount // 2], (self.x , self.y))
+        screen.blit(walk[self.walkCount // 2], (self.x - abs(bg.bgX), self.y))
         self.walkCount += 1
+        self.x += self.vel
+        if self.x + 32  > 800 or self.x < 0:
+            self.vel = - self.vel
+        
 
     def draw_hit_box(self, window):
         hitBox = (self.x, self.y, 32, 32)
         pygame.draw.rect(window, [0, 0, 255], hitBox, 2) 
     
-    def update(self):
-        self.x += self.vel
-        if self.x + 32  > 800 or self.x < 0:
-            self.vel = - self.vel
+

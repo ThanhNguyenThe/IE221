@@ -7,18 +7,17 @@ from objects.flag import *
 from GameControl import *
 pygame.init()
 
-surface = pygame.display.set_mode((800, 448))
-pygame.display.set_caption('Mario')
+# surface = pygame.display.set_mode((800, 448))
+# pygame.display.set_caption('Mario')
 
-map_image = pygame.image.load(os.path.join("img", "map1.png"))
-h = map_image.get_height()
-w = map_image.get_width()
+
 # map_image = pygame.transform.scale(map_image, (w, h*2))
 
 # print(h)
-FPS = 60
-fpsClock = pygame.time.Clock()
+# FPS = 60
+# fpsClock = pygame.time.Clock()
 class Map:
+    map_image = pygame.image.load(os.path.join("img", "map1.png"))
     bgX = 0
     time_collide = 3
     # block = [
@@ -107,12 +106,12 @@ class Map:
 
     def __init__(self):
         pass
-    def drawMap(self):
-        surface.blit(map_image, (self.bgX, 0))
-        # pygame.display.update()
+    def drawMap(self, screen):
+        screen.blit(self.map_image, (self.bgX, 0))
+        
     def drawBlock(self):
         for i in self.block:
-            pygame.draw.rect(map_image, (255, 0, 0), i)
+            pygame.draw.rect(self.map_image, (255, 0, 0), i)
 
     def scrollBg(self, player):
         key = pygame.key.get_pressed()
@@ -132,7 +131,8 @@ class Map:
         for i in self.gold_point:
             i = pygame.Rect(i)
             if i.colliderect(hitBox):
-                map_image.blit(gold_image, (i[0], i[1] - 40, 30, 30))
+                self.map_image.blit(gold_image, (i[0], i[1] - 40, 30, 30))
+                coin_sound.play()
         pass
     
     def win(self, player):
