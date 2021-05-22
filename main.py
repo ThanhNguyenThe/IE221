@@ -25,7 +25,10 @@ run = True
 bg.bgX = 0
 pause = False
 game_stop = False
+
+
 while run:
+    start_time = pygame.time.get_ticks()
     keys = pygame.key.get_pressed()
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -38,12 +41,14 @@ while run:
                 message_to_screen('press c to continue', black, screen, (250, 260))
                 pause_Sound()
             if keys[pygame.K_c]: #continue
-                pause = False
+                pause = False 
+
 
     if win_game(bg, player):
         message_to_screen('You win', white, screen, (300, 224))
 
     if not pause and not win_game(bg, player) and not lose_game(player, mushroom, screen, bg):
+
         bg.drawMap()
         bg.scrollBg(player)
         bg.gold_collect(player) 
@@ -58,6 +63,11 @@ while run:
         mushroom.update()
         
         flag.update(player, bg, screen)
+        out='Time: {time:03d}'.format(time = start_time // 1000)
+        message_to_screen(out, white, screen, (600, 10))
     fpsClock.tick(FPS)
+
+    
+
     pygame.display.update()
     
