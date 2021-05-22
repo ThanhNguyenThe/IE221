@@ -16,23 +16,22 @@ height = 32
 FPS = 80
 screen = pygame.display.set_mode([width_screen, height_screen])
 pygame.display .set_caption('Mario')
+
 bg = Map()
 player = Mario(0, 100, 32, 32)
 mushroom = Mushroom(0, 352, 32, 32)
 flag = Flag(bg.map_image)
+
 run = True
-bg.bgX = 0
+bg.bgX = -0
+
 fpsClock = pygame.time.Clock()
 pause = False
 game_stop = False
-
-
+elaspsed_time = 0
+start_time = pygame.time.get_ticks()
 while run:
-<<<<<<< HEAD
 
-=======
-    start_time = pygame.time.get_ticks()
->>>>>>> 3e28b4cf7d487862ed17ff8560d37beb1981c7c9
     keys = pygame.key.get_pressed()
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -47,16 +46,11 @@ while run:
             if keys[pygame.K_c]: #continue
                 pause = False 
 
+    if pause:
+        start_time = pygame.time.get_ticks() - elaspsed_time
 
-
-<<<<<<< HEAD
     if not pause and not win_game(bg, player, screen) and not lose_game(player, mushroom, screen, bg):
         bg.drawMap(screen)
-=======
-    if not pause and not win_game(bg, player) and not lose_game(player, mushroom, screen, bg):
-
-        bg.drawMap()
->>>>>>> 3e28b4cf7d487862ed17ff8560d37beb1981c7c9
         bg.scrollBg(player)
         bg.gold_collect(player) 
 
@@ -64,22 +58,14 @@ while run:
         player.move(bg)
         player.draw(screen)
 
-
         mushroom.draw_hit_box(screen, bg)
         mushroom.draw(screen, bg)
         mushroom.update()
         
-<<<<<<< HEAD
         flag.update(player, screen, bg)
 
-=======
-        flag.update(player, bg, screen)
-        out='Time: {time:03d}'.format(time = start_time // 1000)
-        message_to_screen(out, white, screen, (600, 10))
->>>>>>> 3e28b4cf7d487862ed17ff8560d37beb1981c7c9
+        elaspsed_time = pygame.time.get_ticks() - start_time
+        message_to_screen('time:' + str(int(elaspsed_time / 1000) + 's'), white, screen, (300, 10))
     fpsClock.tick(FPS)
-
-    
-
     pygame.display.update()
     

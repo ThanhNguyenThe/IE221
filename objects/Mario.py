@@ -214,22 +214,25 @@ class Mario(EntityBase):
     #     return False
 
     def dead(self, enemy, window, bg):
-        if self.y >= 416:
-            window.blit(deadImage, (self.x, self.y))
-            return True
+        # if self.y >= 416:
+        #     window.blit(deadImage, (self.x, self.y))
+        #     return True
         hit_box = pygame.Rect(abs(bg.bgX) + self.x, self.y, 32, 32)
         enemy_hitBox = pygame.Rect(abs(bg.bgX) + enemy.x, enemy.y, 32, 32)
-        if (hit_box.colliderect(enemy_hitBox) and hit_box.y == enemy_hitBox.y and hit_box.left <= enemy_hitBox.left and hit_box.right >= enemy_hitBox.left) or \
-            (hit_box.colliderect(enemy_hitBox) and hit_box.y == enemy_hitBox.y and hit_box.right >= enemy_hitBox.right and hit_box.left <= enemy_hitBox.right):
-            window.blit(deadImage, (self.x, self.y))
-            return True
+        if hit_box.colliderect(enemy_hitBox):
+            if hit_box.left < enemy_hitBox.left and hit_box.right >= enemy_hitBox.left: #right side mario
+                window.blit(deadImage, (self.x, self.y))
+                return True
+            elif hit_box.right > enemy_hitBox.right and hit_box.left <= enemy_hitBox.right: #left side mario
+                window.blit(deadImage, (self.x, self.y))
+                return True
         return False
 
-    def kill(self, enemy, window, bg):
-        hit_box = pygame.Rect(abs(bg.bgX) + self.x, self.y, 32, 32)
-        enemy_hitBox = pygame.Rect(abs(bg.bgX) + enemy.x, enemy.y - 4, 32, 34)
-        if hit_box.colliderect(enemy_hitBox):
-            enemy.die()
+    # def kill(self, enemy, window, bg):
+    #     hit_box = pygame.Rect(abs(bg.bgX) + self.x, self.y, 32, 32)
+    #     enemy_hitBox = pygame.Rect(abs(bg.bgX) + enemy.x, enemy.y - 4, 32, 34)
+    #     if hit_box.colliderect(enemy_hitBox):
+    #         enemy.die()
 # def gameWindow():
 #     window.fill([255,255,255])
 #     player.draw(window)

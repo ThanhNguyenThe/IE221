@@ -14,9 +14,13 @@ text_font = pygame.font.SysFont(None, 40)
 
 white = (255, 255, 255)
 black = (0, 0, 0)
+
 pause_sound = pygame.mixer.Sound('music/alaba.wav')
 coin_sound = pygame.mixer.Sound('music/coin.wav')
 mariodie_sound = pygame.mixer.Sound('music/mariodie.wav')
+
+time_start = pygame.time.get_ticks()
+
 def message_to_screen(msg, color, screen, pos):
     screen_text = text_font.render(msg, 1, color)
     screen.blit(screen_text, pos)
@@ -43,3 +47,8 @@ def lose_game(player, enemy, window, bg):
         message_to_screen('You lose', white, window, (300, 224))
         return True
     return False
+
+def time_counter(screen, pause):
+    game_time = round(pygame.time.get_ticks() / 1000)
+    game_time = str(game_time)
+    message_to_screen('time:'+ game_time, black, screen, (400, 10))
