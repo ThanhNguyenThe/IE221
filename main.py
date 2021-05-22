@@ -25,8 +25,14 @@ bg.bgX = 0
 fpsClock = pygame.time.Clock()
 pause = False
 game_stop = False
-while run:
 
+
+while run:
+<<<<<<< HEAD
+
+=======
+    start_time = pygame.time.get_ticks()
+>>>>>>> 3e28b4cf7d487862ed17ff8560d37beb1981c7c9
     keys = pygame.key.get_pressed()
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -39,11 +45,18 @@ while run:
                 message_to_screen('press c to continue', black, screen, (250, 260))
                 pause_sound.play()
             if keys[pygame.K_c]: #continue
-                pause = False
+                pause = False 
 
 
+
+<<<<<<< HEAD
     if not pause and not win_game(bg, player, screen) and not lose_game(player, mushroom, screen, bg):
         bg.drawMap(screen)
+=======
+    if not pause and not win_game(bg, player) and not lose_game(player, mushroom, screen, bg):
+
+        bg.drawMap()
+>>>>>>> 3e28b4cf7d487862ed17ff8560d37beb1981c7c9
         bg.scrollBg(player)
         bg.gold_collect(player) 
 
@@ -56,8 +69,17 @@ while run:
         mushroom.draw(screen, bg)
         mushroom.update()
         
+<<<<<<< HEAD
         flag.update(player, screen, bg)
 
+=======
+        flag.update(player, bg, screen)
+        out='Time: {time:03d}'.format(time = start_time // 1000)
+        message_to_screen(out, white, screen, (600, 10))
+>>>>>>> 3e28b4cf7d487862ed17ff8560d37beb1981c7c9
     fpsClock.tick(FPS)
+
+    
+
     pygame.display.update()
     
