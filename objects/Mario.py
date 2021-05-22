@@ -132,6 +132,7 @@ class Mario(EntityBase):
                 touch_ground.append(i)
 
         for i in touch_ground:
+            
             if i.colliderect(hitBox[0], self.y, 32, 32):
                 self.y = i[1] - 32
                 self.vel = 0
@@ -201,17 +202,34 @@ class Mario(EntityBase):
                     self.vel_y = 0
 
 
+    # def dead(self, enemy, window, bg):
+    #     if self.y >= 416:
+    #         window.blit(deadImage, (self.x, self.y))
+    #         return True
+    #     hit_box = pygame.Rect(abs(bg.bgX) + self.x, self.y, 32, 32)
+    #     enemy_hitBox = pygame.Rect(abs(bg.bgX) + enemy.x, enemy.y, 32, 32)
+    #     if hit_box.colliderect(enemy_hitBox[0], enemy.y, 32, 32):
+    #         window.blit(deadImage, (self.x, self.y))
+    #         return True
+    #     return False
+
     def dead(self, enemy, window, bg):
-        img = pygame.image.load(os.join.path('img', 'mario_die.png'))
         if self.y >= 416:
-            window.blit(img, (self.x, self.y))
+            window.blit(deadImage, (self.x, self.y))
             return True
-        hit_box = (abs(bg.bgX) + self.x, self.y, 32, 32)
-        if hit_box.colliderect(enemy.hitbox):
-            window.blit(img, (self.x, self.y))
+        hit_box = pygame.Rect(abs(bg.bgX) + self.x, self.y, 32, 32)
+        enemy_hitBox = pygame.Rect(abs(bg.bgX) + enemy.x, enemy.y, 32, 32)
+        if (hit_box.colliderect(enemy_hitBox) and hit_box.y == enemy_hitBox.y and hit_box.left <= enemy_hitBox.left and hit_box.right >= enemy_hitBox.left) or \
+            (hit_box.colliderect(enemy_hitBox) and hit_box.y == enemy_hitBox.y and hit_box.right >= enemy_hitBox.right and hit_box.left <= enemy_hitBox.right):
+            window.blit(deadImage, (self.x, self.y))
             return True
         return False
 
+    def kill(self, enemy, window, bg):
+        hit_box = pygame.Rect(abs(bg.bgX) + self.x, self.y, 32, 32)
+        enemy_hitBox = pygame.Rect(abs(bg.bgX) + enemy.x, enemy.y - 4, 32, 34)
+        if hit_box.colliderect(enemy_hitBox):
+            enemy.die()
 # def gameWindow():
 #     window.fill([255,255,255])
 #     player.draw(window)
