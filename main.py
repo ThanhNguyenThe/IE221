@@ -65,7 +65,7 @@ while run:
         flag.update(player, screen, bg)
 
         elaspsed_time = pygame.time.get_ticks() - start_time
-        message_to_screen('time:' + str(int(elaspsed_time / 1000) + 's'), white, screen, (300, 10))
+        message_to_screen('time:' + str(int(elaspsed_time / 1000)) + 's', white, screen, (300, 10))
     fpsClock.tick(FPS)
     pygame.display.update()
     

@@ -46,7 +46,8 @@ def lose_game(player, enemy, window, bg):
         mariodie_sound.play()
         message_to_screen('You lose', white, window, (300, 224))
         return True
-    return False
+    else:
+        return False
 
 def time_counter(screen, pause):
     game_time = round(pygame.time.get_ticks() / 1000)

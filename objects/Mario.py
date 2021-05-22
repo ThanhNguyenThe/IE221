@@ -218,21 +218,45 @@ class Mario(EntityBase):
         #     window.blit(deadImage, (self.x, self.y))
         #     return True
         hit_box = pygame.Rect(abs(bg.bgX) + self.x, self.y, 32, 32)
-        enemy_hitBox = pygame.Rect(abs(bg.bgX) + enemy.x, enemy.y, 32, 32)
-        if hit_box.colliderect(enemy_hitBox):
-            if hit_box.left < enemy_hitBox.left and hit_box.right >= enemy_hitBox.left: #right side mario
-                window.blit(deadImage, (self.x, self.y))
-                return True
-            elif hit_box.right > enemy_hitBox.right and hit_box.left <= enemy_hitBox.right: #left side mario
-                window.blit(deadImage, (self.x, self.y))
-                return True
-        return False
+        enemy_hitBox = pygame.Rect(enemy.x, enemy.y, 32, 32)
+        
+        if hit_box.colliderect(enemy_hitBox) == True:
+            # Check neu diem trai cua mario cham enemy nhung diem phai thi ko 
+            # Check phai enemy collide voi mario
+            if enemy_hitBox.collidepoint(hit_box.midleft) == True and (\
+                enemy_hitBox.collidepoint(hit_box.topleft) == True or \
+                enemy_hitBox.collidepoint(hit_box.bottomleft) == True) and \
+                enemy_hitBox.collidepoint(hit_box.midright) == False and (\
+                enemy_hitBox.collidepoint(hit_box.topright) == False or \
+                enemy_hitBox.collidepoint(hit_box.bottomright) == False):
+                    window.blit(deadImage, (self.x, self.y))
+                    return True
+            # Check neu diem phai cua mario cham enemy nhung diem trai thi ko 
+            # Check trai enemy collide voi mario
+            if enemy_hitBox.collidepoint(hit_box.midright) == True and (\
+                enemy_hitBox.collidepoint(hit_box.topright) == True or \
+                enemy_hitBox.collidepoint(hit_box.bottomright) == True) and \
+                enemy_hitBox.collidepoint(hit_box.midleft) == False and (\
+                enemy_hitBox.collidepoint(hit_box.topleft) == False or \
+                enemy_hitBox.collidepoint(hit_box.bottomleft) == False):
+                    window.blit(deadImage, (self.x, self.y))
+                    return True
+            pass
+        else:
+            return False
 
     # def kill(self, enemy, window, bg):
     #     hit_box = pygame.Rect(abs(bg.bgX) + self.x, self.y, 32, 32)
     #     enemy_hitBox = pygame.Rect(abs(bg.bgX) + enemy.x, enemy.y - 4, 32, 34)
-    #     if hit_box.colliderect(enemy_hitBox):
-    #         enemy.die()
+    #     if hit_box.colliderect(enemy_hitBox) == True:
+    #         #check neu mario collide voi top side enemy 
+    #         if enemy_hitBox.collidepoint(hit_box.midbottom) == True and (\
+    #             enemy_hitBox.collidepoint(hit_box.bottomleft) == True or \
+    #             enemy_hitBox.collidepoint(hit_box.bottomright) == True) and \
+    #             enemy_hitBox.collidepoint(hit_box.midtop) == True and (\
+    #             enemy_hitBox.collidepoint(hit_box.topleft) == True or \
+    #             enemy_hitBox.collidepoint(hit_box.topright) == True):
+    #                 enemy.die()
 # def gameWindow():
 #     window.fill([255,255,255])
 #     player.draw(window)
