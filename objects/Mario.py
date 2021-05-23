@@ -217,7 +217,7 @@ class Mario(EntityBase):
         # if self.y >= 416:
         #     window.blit(deadImage, (self.x, self.y))
         #     return True
-        hit_box = pygame.Rect(abs(bg.bgX) + self.x, self.y, 32, 32)
+        hit_box = pygame.Rect(self.x, self.y, 32, 32)
         enemy_hitBox = pygame.Rect(enemy.x, enemy.y, 32, 32)
         
         if hit_box.colliderect(enemy_hitBox) == True:
