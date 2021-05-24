@@ -50,14 +50,16 @@ while run:
                 pause_sound.play()
             if keys[pygame.K_c]: #continue
                 pause = False 
+                
+            if event.type == pygame.KEYDOWN:
+                name += event.unicode
+            if keys[pygame.K_RETURN]:
+                name_input = False
+                start_time = 0
     if pause:
         start_time = pygame.time.get_ticks() - elaspsed_time
     if name_input:
         infor_screen(screen, name)
-        if event.type == pygame.KEYDOWN:
-            name += event.unicode
-        if keys[pygame.K_RETURN]:
-            name_input = False
     if not pause and not name_input and not win_game(bg, player, screen) and not lose_game(player, mushroom, screen, bg) and not lose_game(player, mushroom1, screen, bg):
         bg.drawMap(screen)
         bg.scrollBg(player)
