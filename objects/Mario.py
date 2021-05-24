@@ -214,12 +214,11 @@ class Mario(EntityBase):
     #     return False
 
     def dead(self, enemy, window, bg):
-        # if self.y >= 416:
-        #     window.blit(deadImage, (self.x, self.y))
-        #     return True
+        if self.y >= 416:
+            window.blit(deadImage, (self.x, self.y))
+            return True
         hit_box = pygame.Rect(self.x - bg.bgX, self.y, 32, 32)
         enemy_hitBox = pygame.Rect(enemy.x, enemy.y, 32, 32)
-        
         if hit_box.colliderect(enemy_hitBox) == True:
             # Check neu diem trai cua mario cham enemy nhung diem phai thi ko 
             # Check phai enemy collide voi mario
