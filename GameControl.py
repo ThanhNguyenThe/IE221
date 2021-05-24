@@ -1,13 +1,14 @@
 import pygame
 import os
 from pygame import font
+from pygame.event import Event
 from pygame.locals import *
 import sys
 import time
 
 pygame.font.init()
 pygame.mixer.init()
-
+pygame.init()
 # pause_sound =  pygame.mixer.Sound(os.path.join('music', 'alaba.mp3'))
 
 text_font = pygame.font.SysFont(None, 40)
@@ -48,3 +49,12 @@ def lose_game(player, enemy, window, bg):
         return True
     else:
         return False
+
+def infor_screen(screen, name):
+    screen.fill(white)
+    message_to_screen('Enter your name:', black, screen, (300, 150))
+    pygame.draw.rect(screen, black, (300, 200, 300, 100))
+    message_to_screen(name, white, screen, (300, 205))
+    message_to_screen('Press Enter to play game', black, screen, (300, 350))
+    return name
+    
