@@ -20,10 +20,12 @@ pygame.display .set_caption('Mario')
 bg = Map()
 player = Mario(0, 100, 32, 32)
 mushroom = Mushroom(0, 352, 32, 32)
+mushroom1 = Mushroom(2270, 352, 32, 32)
+
 flag = Flag(bg.map_image)
 
 run = True
-bg.bgX = -0
+bg.bgX = -2270
 
 fpsClock = pygame.time.Clock()
 pause = False
@@ -49,7 +51,7 @@ while run:
     if pause:
         start_time = pygame.time.get_ticks() - elaspsed_time
 
-    if not pause and not win_game(bg, player, screen) and not lose_game(player, mushroom, screen, bg):
+    if not pause and not win_game(bg, player, screen) and not lose_game(player, mushroom, screen, bg) and not lose_game(player, mushroom1, screen, bg):
         bg.drawMap(screen)
         bg.scrollBg(player)
         bg.gold_collect(player) 
@@ -59,8 +61,11 @@ while run:
         player.draw(screen)
 
         mushroom.draw_hit_box(screen, bg)
-        mushroom.draw(screen, bg)
+        mushroom.draw(screen, bg, (0, 800))
         mushroom.update()
+        mushroom1.draw_hit_box(screen, bg)
+        mushroom1.draw(screen, bg, (2270, 2700))
+        mushroom1.update()
         
         flag.update(player, screen, bg)
 

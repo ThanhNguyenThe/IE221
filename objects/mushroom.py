@@ -19,23 +19,21 @@ class Mushroom(EntityBase):
         self.vel = 2
         self.isDie = False
         self.walkCount = 0
-        self.hitBox = pygame.Rect(self.x, self.y, 32, 32)
     
-    def draw(self, window, bg):
+    def draw(self, window, bg, xpos):
         if self.isDie:
-            window.blit(die, (self.x, self.y))
+            window.blit(die, (self.x + bg.bgX, self.y))
         if self.walkCount + 1 >= 4:
             self.walkCount = 0
-        window.blit(walk[self.walkCount // 2], (self.x, self.y))
+        window.blit(walk[self.walkCount // 2], (self.x + bg.bgX, self.y))
         self.walkCount += 1
         self.x += self.vel
-        if self.x + 32  > 800 or self.x < 0:
+        if self.x + 32  > xpos[1] or self.x < xpos[0]:
             self.vel = - self.vel
         
 
-
     def draw_hit_box(self, window, bg):
-        hitBox = (self.x, self.y, 32, 32)
+        hitBox = (self.x + bg.bgX, self.y, 32, 32)
         pygame.draw.rect(window, [0, 0, 255], hitBox, 2) 
 
     def die(self):

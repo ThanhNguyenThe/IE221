@@ -48,8 +48,3 @@ def lose_game(player, enemy, window, bg):
         return True
     else:
         return False
-
-def time_counter(screen, pause):
-    game_time = round(pygame.time.get_ticks() / 1000)
-    game_time = str(game_time)
-    message_to_screen('time:'+ game_time, black, screen, (400, 10))
