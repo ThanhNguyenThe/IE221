@@ -25,7 +25,7 @@ mushroom1 = Mushroom(2270, 352, 32, 32)
 flag = Flag(bg.map_image)
 
 run = True
-bg.bgX = -0
+bg.bgX = -5000
 
 fpsClock = pygame.time.Clock()
 pause = False
@@ -76,10 +76,10 @@ while run:
 
         mushroom.draw_hit_box(screen, bg)
         mushroom.draw(screen, bg, (0, 800))
-        mushroom.update()
+        mushroom.update(player, bg)
         mushroom1.draw_hit_box(screen, bg)
         mushroom1.draw(screen, bg, (2270, 2700))
-        mushroom1.update()
+        mushroom1.update(player, bg)
         
         flag.update(player, screen, bg)
 

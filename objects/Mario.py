@@ -7,7 +7,7 @@ pygame.init()
 # window = pygame.display.set_mode((500,500))
 # pygame.display.set_caption("Mario")
 
-width_screen = 600
+mario_width_pos = 600
 height_screen = 448
 width = 32
 height = 32
@@ -80,7 +80,7 @@ class Mario(EntityBase):
             self.isLeft = True
             self.horizonFacing = 'left'
             self.isRight = False
-        elif keys[pygame.K_RIGHT] and self.x < width_screen - self.width - self.vel_x:
+        elif keys[pygame.K_RIGHT] and self.x < mario_width_pos - self.width - self.vel_x:
             self.x += self.vel_x
             self.isRight = True
             self.horizonFacing = 'right'

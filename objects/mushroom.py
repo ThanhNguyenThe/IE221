@@ -36,7 +36,11 @@ class Mushroom(EntityBase):
         hitBox = (self.x + bg.bgX, self.y, 32, 32)
         pygame.draw.rect(window, [0, 0, 255], hitBox, 2) 
 
-    def die(self):
-        self.kill()
-    
 
+    def update(self, player, bg):
+        player_hitbox = pygame.Rect(player.x - bg.bgX, player.y, 32, 32)
+        hitBox = pygame.Rect(self.x, self.y, 32, 32)
+        if player_hitbox.colliderect(hitBox):
+            if player_hitbox[1] + 32 >= hitBox.top and player_hitbox.top != hitBox.top:
+                self.y = 800
+    
