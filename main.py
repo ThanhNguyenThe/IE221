@@ -25,7 +25,7 @@ mushroom1 = Mushroom(2270, 352, 32, 32)
 flag = Flag(bg.map_image)
 
 run = True
-bg.bgX = -2270
+bg.bgX = -0
 
 fpsClock = pygame.time.Clock()
 pause = False
@@ -49,8 +49,7 @@ while run:
                 message_to_screen('press c to continue', black, screen, (250, 260))
                 pause_sound.play()
             if keys[pygame.K_c]: #continue
-                pause = False 
-                
+                pause = False
             if event.type == pygame.KEYDOWN:
                 name += event.unicode
             if keys[pygame.K_RETURN]:
@@ -60,7 +59,13 @@ while run:
         start_time = pygame.time.get_ticks() - elaspsed_time
     if name_input:
         infor_screen(screen, name)
-    if not pause and not name_input and not win_game(bg, player, screen) and not lose_game(player, mushroom, screen, bg) and not lose_game(player, mushroom1, screen, bg):
+
+    if is_win_game(bg, player, screen):
+        win_game_screen(screen)
+    if is_lose_game(player, mushroom, screen, bg) or is_lose_game(player, mushroom1, screen, bg):
+        lose_game_screen(screen)
+
+    if not pause and not name_input and not is_win_game(bg, player, screen) and not is_lose_game(player, mushroom, screen, bg) and not is_lose_game(player, mushroom1, screen, bg):
         bg.drawMap(screen)
         bg.scrollBg(player)
         bg.gold_collect(player) 

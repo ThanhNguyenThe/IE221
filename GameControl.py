@@ -28,7 +28,7 @@ def message_to_screen(msg, color, screen, pos):
 
 def score():
     pass
-def win_game(bg, player, screen):
+def is_win_game(bg, player, screen):
         hitBox = pygame.Rect(abs(bg.bgX) + player.x, player.y, 32, 32)
         winning_door = pygame.Rect(bg.winning_door)
         if hitBox[0] >= winning_door[0] + winning_door[2] and hitBox[1] + 32 < winning_door[1]:
@@ -38,17 +38,20 @@ def win_game(bg, player, screen):
                     bg.time_collide = 0
         if bg.time_collide == 0:
             if hitBox.colliderect(winning_door):
-                message_to_screen('You win', white, screen, (300, 224))
                 return True
         return False
 
-def lose_game(player, enemy, window, bg):
+def win_game_screen(screen):
+    message_to_screen('You win', white, screen, (300, 224))
+
+def is_lose_game(player, enemy, window, bg):
     if player.dead(enemy, window, bg):
-        mariodie_sound.play()
-        message_to_screen('You lose', white, window, (300, 224))
         return True
-    else:
-        return False
+    return False
+
+def lose_game_screen(screen):
+    mariodie_sound.play()
+    message_to_screen('You lose', white, screen, (300, 224))
 
 def infor_screen(screen, name):
     screen.fill(white)

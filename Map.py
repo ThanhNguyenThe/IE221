@@ -124,7 +124,8 @@ class Map:
             self.bgX = -6200
         if self.bgX >= 0:
             self.bgX = 0
-
+        if self.bgX > 5800:
+            pass
     def gold_collect(self, player):
         gold_image = pygame.transform.scale(pygame.image.load(os.path.join('img', 'gold.png')), (30, 30))
         hitBox = pygame.Rect(abs(self.bgX) + player.x, player.y, 32, 32)
