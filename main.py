@@ -1,90 +1,79 @@
 import pygame
-import sys
-import math
-import os
-from pygame.locals import *
-from objects.Mario import *
-from objects.mushroom import *
-from Map import *
-from GameControl import *
+from game.game import *
+from data.top3 import *
+
 pygame.init()
+pygame.display.set_caption('Mario 1.0')
+screen = pygame.display.set_mode((800,484))
 
-width_screen = 800
-height_screen = 448
-width = 32
-height = 32
-FPS = 80
-screen = pygame.display.set_mode([width_screen, height_screen])
-pygame.display .set_caption('Mario')
+click = False
 
-bg = Map()
-player = Mario(0, 100, 32, 32)
-mushroom = Mushroom(10, 352, 32, 32)
-mushroom1 = Mushroom(2270, 352, 32, 32)
+def main_menu():
+    while True:
 
-flag = Flag(bg.map_image)
+        screen.fill((0, 0, 0))
+        message_to_screen('Main menu', white, screen, (325, 20))
+        
+        mx, my = pygame.mouse.get_pos()
 
-run = True
-bg.bgX = -5000
+        btn1 = pygame.Rect(300, 150, 200, 30)
+        btn2 = pygame.Rect(300, 250, 200, 30)
+        btn3 = pygame.Rect(300, 350, 200, 30)
+       
 
-fpsClock = pygame.time.Clock()
-pause = False
-game_stop = False
-name_input = True
-elaspsed_time = 0
-start_time = pygame.time.get_ticks()
-
-name = ''
-while run:
-
-    keys = pygame.key.get_pressed()
-    for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+        if btn1.collidepoint(mx,my):
+            if click:
+                start_game(screen)
+        if btn2.collidepoint(mx, my):
+            if click:
+                hall_of_fame()
+        if btn3.collidepoint(mx, my):
+            if click:
                 pygame.quit()
                 sys.exit()
-            if keys[pygame.K_p]: #pause
-                pause = True
-                screen.fill((255, 255, 255))
-                message_to_screen('paused', black, screen, (300, 224))
-                message_to_screen('press c to continue', black, screen, (250, 260))
-                pause_sound.play()
-            if keys[pygame.K_c]: #continue
-                pause = False
-            if event.type == pygame.KEYDOWN:
-                name += event.unicode
-            if keys[pygame.K_RETURN]:
-                name_input = False
-                start_time = 0
-    if pause:
-        start_time = pygame.time.get_ticks() - elaspsed_time
-    if name_input:
-        infor_screen(screen, name)
 
-    if is_win_game(bg, player, screen):
-        win_game_screen(screen)
-    if is_lose_game(player, mushroom, screen, bg) or is_lose_game(player, mushroom1, screen, bg):
-        lose_game_screen(screen)
+        pygame.draw.rect(screen, (255, 0, 0), btn1)
+        pygame.draw.rect(screen, (255, 0, 0), btn2)
+        pygame.draw.rect(screen, (255, 0, 0), btn3)
+        message_to_screen('Play', white, screen, (370, 150))
+        message_to_screen('Ranked', white, screen, (350, 250))
+        message_to_screen('Quit', white, screen, (370, 350))
 
-    if not pause and not name_input and not is_win_game(bg, player, screen) and not is_lose_game(player, mushroom, screen, bg) and not is_lose_game(player, mushroom1, screen, bg):
-        bg.drawMap(screen)
-        bg.scrollBg(player)
-        bg.gold_collect(player) 
-
-        player.draw_hit_box(screen)
-        player.move(bg)
-        player.draw(screen)
-
-        mushroom.draw_hit_box(screen, bg)
-        mushroom.draw(screen, bg, (0, 800))
-        mushroom.update(player, bg)
-        mushroom1.draw_hit_box(screen, bg)
-        mushroom1.draw(screen, bg, (2270, 2700))
-        mushroom1.update(player, bg)
+        click = False
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
         
-        flag.update(player, screen, bg)
+        pygame.display.update()
 
-        elaspsed_time = pygame.time.get_ticks() - start_time
-        message_to_screen('time:' + str(int(elaspsed_time / 1000)) + 's', white, screen, (300, 10))
-    fpsClock.tick(FPS)
-    pygame.display.update()
-    
+def hall_of_fame():
+    running = True
+    while running:
+        screen.fill((0, 0, 0))
+        message_to_screen('Ranked', white, screen, (350, 20))
+        top_player = top3()
+        if (len(top_player) == 0):
+            message_to_screen('Nobody has been here!', white, screen, (260, 150))
+        else:
+            message_to_screen('Name: ' + top_player[0][0] + '   ' + 'Time: ' + str(top_player[0][1]) + 's', white, screen, (280, 150))
+            message_to_screen('Name: ' + top_player[1][0] + '   ' + 'Time: ' + str(top_player[1][1]) + 's', white, screen, (280, 250))
+            message_to_screen('Name: ' + top_player[2][0] + '   ' + 'Time: ' + str(top_player[2][1]) + 's', white, screen, (280, 350))
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
+        
+        pygame.display.update()
+
+main_menu()

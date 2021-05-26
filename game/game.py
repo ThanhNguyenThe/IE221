@@ -67,7 +67,7 @@ def start_game(screen):
         if is_win_game(bg, player, screen):
             win_game_screen(screen)
             isWin = True
-            
+
         if is_lose_game(player, mushroom, screen, bg) or is_lose_game(player, mushroom1, screen, bg):
             lose_game_screen(screen)
 

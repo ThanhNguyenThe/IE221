@@ -1,7 +1,6 @@
 import pygame
 import os
 from pygame.locals import *
-from objects.entitybase import EntityBase
 pygame.init()
 
 width = 32
@@ -10,7 +9,7 @@ walk = [pygame.transform.scale(pygame.image.load(os.path.join("img", "mushroom1.
         pygame.transform.scale(pygame.image.load(os.path.join("img", "mushroom2.png")), (width, height))]
 die = pygame.transform.scale(pygame.image.load(os.path.join("img", "mushroom_die.png")), (width, height))
 
-class Mushroom(EntityBase):
+class Mushroom(pygame.sprite.Sprite):
     def __init__(self, x, y, w, h):
         self.x = x
         self.y = y

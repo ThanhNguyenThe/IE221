@@ -31,11 +31,12 @@ def score():
 def is_win_game(bg, player, screen):
         hitBox = pygame.Rect(abs(bg.bgX) + player.x, player.y, 32, 32)
         winning_door = pygame.Rect(bg.winning_door)
-        if hitBox[0] >= winning_door[0] + winning_door[2] and hitBox[1] + 32 < winning_door[1]:
-            if hitBox[0] <= winning_door[0] + winning_door[2] and hitBox[1] + 32 < winning_door[1]:
-                bg.time_collide -= 1
-                if bg.time_collide < 0:
-                    bg.time_collide = 0
+        if hitBox.left < winning_door.left and hitBox.right > winning_door.left and hitBox.bottom < winning_door.top:
+            bg.time_collide -= 1
+        if hitBox.right > winning_door.right and hitBox.left < winning_door.right and hitBox.bottom < winning_door.top:
+            bg.time_collide -= 1
+        if bg.time_collide < 0:
+            bg.time_collide = 0
         if bg.time_collide == 0:
             if hitBox.colliderect(winning_door):
                 return True

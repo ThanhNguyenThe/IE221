@@ -1,13 +1,12 @@
 import pygame
 import os
 from pygame.locals import *
-from objects.entitybase import EntityBase
 pygame.init()
 
 # window = pygame.display.set_mode((500,500))
 # pygame.display.set_caption("Mario")
 
-mario_width_pos = 600
+mario_width_pos = 800
 height_screen = 448
 width = 32
 height = 32
@@ -25,7 +24,7 @@ jumpImage = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_
 char = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_stand.png")), (width, height))
 clock = pygame.time.Clock()
 
-class Mario(EntityBase):
+class Mario(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height):
         self.x = x
         self.y = y
@@ -113,105 +112,18 @@ class Mario(EntityBase):
         if self.y > 448 : 
             self.y = 416
             self.vel_y = 10
-        
-        #collision
-        hit_box = (abs(bg.bgX) + self.x, self.y, 32, 32)
-        hitBox = pygame.Rect(abs(bg.bgX) + self.x, self.y, 32, 32)
-        keys = pygame.key.get_pressed()
-        hit_block = []
-        touch_ground = []
-
+        # y 
+        hitBox = (abs(bg.bgX) + self.x, self.y, 32, 32)
         for i in bg.block:
-            i = pygame.Rect(i[0], i[1], i[2], i[3])
-            if i.colliderect(hit_box[0], self.y , 32, 32):
-                hit_block.append(i)
-
-        for i in bg.ground:
-            i = pygame.Rect(i[0], i[1], i[2], i[3])
-            if i.colliderect(hit_box[0], self.y , 32, 32):
-                touch_ground.append(i)
-
-        for i in touch_ground:
-            
-            if i.colliderect(hitBox[0], self.y, 32, 32):
-                self.y = i[1] - 32
-                self.vel = 0
-
-        for j in hit_block:
-            if self.isRight:
-                while j.colliderect(hitBox[0], self.y, 32, 32):
-                    self.x -= self.vel_x 
-                    break
-            if self.isLeft:
-                while j.colliderect(hitBox[0], self.y, 32, 32):
-                    self.x += self.vel_x
-                    break
-            if self.vel_y > 0:
-                while j.colliderect(hitBox[0], self.y, 32, 32):
-                    self.y -= 1
-                    self.vel = 0
-                    
-            elif self.vel_y < 0:
-                while j.colliderect(hitBox[0], self.y, 32, 32):
-                    self.y += 1
-                    self.vel = 0
-                    
-           
-            # #x collision
-        # for i in bg.ground:
-        #     i = pygame.Rect(i[0], i[1], i[2], i[3])
-        #     if i.colliderect(hit_box[0], self.y , 32, 32):
-        #         touch_ground.append(i)
-
-        # for i in touch_ground:
-        #     if i.colliderect(hitBox[0], self.y, 32, 32):
-        #         if self.vel_y >= 0:
-        #             self.y = i[1] - 32
-        #             self.vel_y = 0
-            
-
-
-        for i in hit_block:
-            #x collision
-            # if i.colliderect(hitBox[0], self.y , 32, 32):
-            #     if hitBox[0] >= i[0]:
-            #         self.vel_x = 0
-            # #right
-            # if i.colliderect(hitBox[0] + self.vel_x, self.y + 15, 32, 32):
-            #     # self.vel_x = 0
-            #     self.x = hit_box[0] - abs(bg.bgX) - 32
-            #     self.y = i[1] + i[3] - 32
-            #     # print(0)
-            # #left
-            # if i.colliderect(hitBox[0] - self.vel_x, self.y , 32, 32):    
-            #     # self.vel_x = 0
-            #     self.x = hit_box[0] - abs(bg.bgX)
-            #     self.y = i[1] + i[3] - 32
-            # else:
-            #     self.vel_x = 3
-            #y collision
-            # if i.colliderect(hitBox[0], self.y , 32, 32):
+            i = pygame.Rect(i)
             if i.colliderect(hitBox[0], self.y + self.vel_y, 32, 32):
-                #under
                 if self.vel_y < 0:
                     self.y = i[1] + i[3]
                     self.vel_y = 0
-                #above
                 elif self.vel_y >= 0:
                     self.y = i[1] - 32
                     self.vel_y = 0
-
-
-    # def dead(self, enemy, window, bg):
-    #     if self.y >= 416:
-    #         window.blit(deadImage, (self.x, self.y))
-    #         return True
-    #     hit_box = pygame.Rect(abs(bg.bgX) + self.x, self.y, 32, 32)
-    #     enemy_hitBox = pygame.Rect(abs(bg.bgX) + enemy.x, enemy.y, 32, 32)
-    #     if hit_box.colliderect(enemy_hitBox[0], enemy.y, 32, 32):
-    #         window.blit(deadImage, (self.x, self.y))
-    #         return True
-    #     return False
+           #     return False
 
     def dead(self, enemy, window, bg):
         if self.y >= 416:
@@ -256,22 +168,4 @@ class Mario(EntityBase):
     #             enemy_hitBox.collidepoint(hit_box.topleft) == True or \
     #             enemy_hitBox.collidepoint(hit_box.topright) == True):
     #                 enemy.die()
-# def gameWindow():
-#     window.fill([255,255,255])
-#     player.draw(window)
-#     # player.draw_hit_box(window)
-#     pygame.display.update()
 
-# player = Mario(200, 410, 64, 64)
-# run  = True
-
-# while run:
-#     clock.tick(60)
-
-#     for event in pygame.event.get():
-#         if event.type == pygame.QUIT:
-#             run = False
-        
-#     player.move()
-#     gameWindow()
-# pygame.quit()
