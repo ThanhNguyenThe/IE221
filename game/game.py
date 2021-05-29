@@ -26,7 +26,7 @@ def start_game(screen):
     flag = Flag(bg.map_image)
 
     run = True
-    bg.bgX = -5500
+    bg.bgX = 0
 
     fpsClock = pygame.time.Clock()
     pause = False

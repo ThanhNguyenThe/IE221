@@ -4,7 +4,7 @@ from data.top3 import *
 
 pygame.init()
 pygame.display.set_caption('Mario 1.0')
-screen = pygame.display.set_mode((800,484))
+screen = pygame.display.set_mode((800,448))
 
 click = False
 
@@ -62,6 +62,11 @@ def hall_of_fame():
         top_player = top3()
         if (len(top_player) == 0):
             message_to_screen('Nobody has been here!', white, screen, (260, 150))
+        elif (len(top_player) == 1):
+            message_to_screen('Name: ' + top_player[0][0] + '   ' + 'Time: ' + str(top_player[0][1]) + 's', white, screen, (280, 150))
+        elif (len(top_player) == 2):
+            message_to_screen('Name: ' + top_player[0][0] + '   ' + 'Time: ' + str(top_player[0][1]) + 's', white, screen, (280, 150))
+            message_to_screen('Name: ' + top_player[1][0] + '   ' + 'Time: ' + str(top_player[1][1]) + 's', white, screen, (280, 250))
         else:
             message_to_screen('Name: ' + top_player[0][0] + '   ' + 'Time: ' + str(top_player[0][1]) + 's', white, screen, (280, 150))
             message_to_screen('Name: ' + top_player[1][0] + '   ' + 'Time: ' + str(top_player[1][1]) + 's', white, screen, (280, 250))
