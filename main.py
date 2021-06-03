@@ -5,7 +5,7 @@ from data.top3 import *
 pygame.init()
 pygame.display.set_caption('Mario 1.0')
 screen = pygame.display.set_mode((800,448))
-
+    
 click = False
 
 def main_menu():
@@ -14,9 +14,9 @@ def main_menu():
         screen.fill((0, 0, 0))
         message_to_screen('Main menu', white, screen, (325, 20))
         
-        mx, my = pygame.mouse.get_pos()
+        mx, my = pygame.mouse.get_pos() #định vị con chuột
 
-        btn1 = pygame.Rect(300, 150, 200, 30)
+        btn1 = pygame.Rect(300, 150, 200, 30) #các hitbox ô chữ nhật để bấm vào
         btn2 = pygame.Rect(300, 250, 200, 30)
         btn3 = pygame.Rect(300, 350, 200, 30)
        
@@ -32,10 +32,10 @@ def main_menu():
                 pygame.quit()
                 sys.exit()
 
-        pygame.draw.rect(screen, (255, 0, 0), btn1)
+        pygame.draw.rect(screen, (255, 0, 0), btn1) #vẽ hcn
         pygame.draw.rect(screen, (255, 0, 0), btn2)
         pygame.draw.rect(screen, (255, 0, 0), btn3)
-        message_to_screen('Play', white, screen, (370, 150))
+        message_to_screen('Play', white, screen, (370, 150)) #set up tên lựa chọn cho các hcn
         message_to_screen('Ranked', white, screen, (350, 250))
         message_to_screen('Quit', white, screen, (370, 350))
 
@@ -49,12 +49,13 @@ def main_menu():
                     pygame.quit()
                     sys.exit()
             if event.type == MOUSEBUTTONDOWN:
-                if event.button == 1:
+                if event.button == 1: #click chuột trái
                     click = True
         
         pygame.display.update()
 
-def hall_of_fame():
+def hall_of_fame():  #xuất top 3 trong file data.txt
+    """Màn hình Hall of Fame."""
     running = True
     while running:
         screen.fill((0, 0, 0))

@@ -17,9 +17,10 @@ pygame.init()
 # FPS = 60
 # fpsClock = pygame.time.Clock()
 class Map:
+    """Background Map"""
     map_image = pygame.image.load(os.path.join("img", "map1.png"))
-    bgX = 0
-    time_collide = 100
+    bgX = 0 #tọa độ x của map
+    time_collide = 100 #số lần nhảy qua của player nên đổi tên khác :(
     block = [
     (0, 384, 2206, 64), #ground
     (2270, 384, 480, 64),
@@ -104,13 +105,16 @@ class Map:
     def __init__(self):
         pass
     def drawMap(self, screen):
+        """vẽ map từ tọa độ abs(bgX)"""
         screen.blit(self.map_image, (self.bgX, 0))
         
-    def drawBlock(self):
+    def drawBlock(self): 
+        """vẽ hitbox các block"""
         for i in self.block:
             pygame.draw.rect(self.map_image, (255, 0, 0), i)
 
-    def scrollBg(self, player):
+    def scrollBg(self, player): 
+        """trượt background"""
         key = pygame.key.get_pressed()
         if player.x > 300 and key[pygame.K_RIGHT]:
             self.bgX -= 5
@@ -120,13 +124,15 @@ class Map:
             self.bgX = -5950
         if self.bgX >= 0:
             self.bgX = 0
+
     def gold_collect(self, player):
-        gold_image = pygame.transform.scale(pygame.image.load(os.path.join('img', 'gold.png')), (30, 30))
+        """render tiền khi chạm block vàng"""
+        gold_image = pygame.transform.scale(pygame.image.load(os.path.join('img', 'gold.png')), (30, 30)) #load ảnh
         hitBox = pygame.Rect(abs(self.bgX) + player.x, player.y, 32, 32)
         for i in self.gold_point:
             i = pygame.Rect(i)
             if i.colliderect(hitBox):
-                self.map_image.blit(gold_image, (i[0], i[1] - 40, 30, 30))
+                self.map_image.blit(gold_image, (i[0], i[1] - 40, 30, 30)) #mario chạm vào ô hitbox (hơi bị đẩy xuống) hiện tiền
                 coin_sound.play()
         pass
     

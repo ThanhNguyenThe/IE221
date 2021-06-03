@@ -11,42 +11,48 @@ height_screen = 448
 width = 32
 height = 32
 
+#load các sprite đi qua phải
 walkRight = [pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run1.png")), (width, height)),
             pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run2.png")), (width, height)),
             pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run3.png")), (width, height))]
 
+#load các sprite đi qua trái
 walkLeft = [pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run1.png")), (width, height)), True, False),
             pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run2.png")), (width, height)), True, False),
             pygame.transform.flip(pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_run3.png")), (width, height)), True, False)]
 
+#sprite nhảy, chết
 deadImage = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_die.png")), (width, height))
 jumpImage = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_jump.png")), (width, height))
 char = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_stand.png")), (width, height))
 clock = pygame.time.Clock()
 
 class Mario(pygame.sprite.Sprite):
+    """Nhân vật Mario."""
     def __init__(self, x, y, width, height):
+        """Khởi tạo."""
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.rect = pygame.Rect(x, y, width, height)
-        self.vel_x = 3
-        self.vel_y = 3
-        self.isJump = False
+        self.vel_x = 3 #vận tốc x
+        self.vel_y = 3 #vận tốc y
+        self.isJump = False   #các cờ check thay đổi sprite
         self.isLeft = False
         self.isRight = False
         self.isDie = False
         self.horizonFacing = 'right'
         self.walkCount = 0 
-        self.jumpCount = 10
+        self.jumpCount = 10 #Nếu cần giới hạn độ cao khi nhảy thì dùng
 
         
-    def draw(self, window):
+    def draw(self, window): 
+        """Thay đổi sprite liên tục khi di chuyển."""
         if self.walkCount + 1 >= 9:
             self.walkCount =  0
         if self.isLeft and self.isJump == False:
-            window.blit(walkLeft[self.walkCount // 3], (self.x, self.y))
+            window.blit(walkLeft[self.walkCount // 3], (self.x, self.y)) 
             self.walkCount += 1
         elif self.isRight and self.isJump == False:
             window.blit(walkRight[self.walkCount // 3], (self.x, self.y))
@@ -68,12 +74,18 @@ class Mario(pygame.sprite.Sprite):
 
         
     def draw_hit_box(self, window):
+        """Vẽ hitbox."""
         hitBox = (self.x, self.y, 32, 32)
         pygame.draw.rect(window, [0, 255, 0], hitBox, 2)     
 
 
     def move(self, bg):
+
         keys = pygame.key.get_pressed()
+        """
+        Kích hoạt cờ để thay đổi sprite khi di chuyển và di chuyển.
+        Xử lý va chạm và thêm trọng lực.
+        """
         if keys[pygame.K_LEFT] and self.x > self.vel_x:
             self.x -= self.vel_x
             self.isLeft = True
@@ -89,7 +101,7 @@ class Mario(pygame.sprite.Sprite):
             self.isLeft = False
             self.walkCount = 0
 
-        if not(self.isJump):
+        if not(self.isJump): #nhảy
             if keys[pygame.K_SPACE]:
                 self.isJump = True
                 self.isRight = False
@@ -112,7 +124,7 @@ class Mario(pygame.sprite.Sprite):
         if self.y > 448 : 
             self.y = 416
             self.vel_y = 10
-        # y 
+        # y collision
         hitBox = (abs(bg.bgX) + self.x, self.y, 32, 32)
         for i in bg.block:
             i = pygame.Rect(i)
@@ -126,7 +138,8 @@ class Mario(pygame.sprite.Sprite):
            #     return False
 
     def dead(self, enemy, window, bg):
-        if self.y >= 416:
+        """Kiểm tra khi nào mario chết."""
+        if self.y >= 416: #rớt vực
             window.blit(deadImage, (self.x, self.y))
             return True
         hit_box = pygame.Rect(self.x - bg.bgX, self.y, 32, 32)
