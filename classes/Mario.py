@@ -28,7 +28,31 @@ char = pygame.transform.scale(pygame.image.load(os.path.join("img", "mario_stand
 clock = pygame.time.Clock()
 
 class Mario(pygame.sprite.Sprite):
-    """Nhân vật Mario."""
+    """
+    Nhân vật Mario
+        Attributes:
+            x: int, tọa độ x
+            y: int, tọa độ y
+            width: int, độ rộng
+            height: int, độ dài
+            rect: pygame.Rect, hcn của tọa độ
+            vel_x: int, vận tốc chiều ngang
+            vel_y: int, vận tốc chiều dọc
+            isJump: bool, cờ kiểm tra nhảy
+            isLeft: bool, cờ kiểm tra xoay mặt trái
+            isRight: bool, cờ kiểm tra xoay mặt phải
+            isDie: bool, cờ kiểm tra chết
+            horizonFacing: str, cờ kiểm tra xoay mặt phải hay trái khi nhảy
+            walkCount: int, thay đổi sprite
+            jumpCount: int, giới hạn độ cao khi nhảy (đã xóa chức năng này)
+
+        Methods:
+            draw(window): Thay đổi sprite liên tục khi di chuyển.
+            draw_hit_box(window): Vẽ hitbox.
+            move(bg):   Kích hoạt cờ để thay đổi sprite khi di chuyển và di chuyển.
+                    Xử lý va chạm và thêm trọng lực.
+            dead(enemy, window, bg): Kiểm tra khi nào mario chết.
+    """
     def __init__(self, x, y, width, height):
         """Khởi tạo."""
         self.x = x
@@ -80,12 +104,11 @@ class Mario(pygame.sprite.Sprite):
 
 
     def move(self, bg):
-
-        keys = pygame.key.get_pressed()
         """
         Kích hoạt cờ để thay đổi sprite khi di chuyển và di chuyển.
         Xử lý va chạm và thêm trọng lực.
         """
+        keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and self.x > self.vel_x:
             self.x -= self.vel_x
             self.isLeft = True

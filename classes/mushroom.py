@@ -11,7 +11,22 @@ walk = [pygame.transform.scale(pygame.image.load(os.path.join("img", "mushroom1.
 die = pygame.transform.scale(pygame.image.load(os.path.join("img", "mushroom_die.png")), (width, height))
 
 class Mushroom(pygame.sprite.Sprite):
-    """Nấm"""
+    """
+    Nấm
+        Attributes:
+            x: int, tọa độ x
+            y: int, tọa độ y
+            w: int, độ rộng
+            h: int, độ dài
+            vel: int, vận tộc chiều ngang
+            isDie: bool, cờ kiểm tra chết
+            walkCount: int, thay đổi sprite
+        Methods:
+            draw(window, bg, xpos):   Vẽ và thay đổi sprite khi di chuyển.
+                    Di chuyển trong 1 khoảng x nhất định.
+            draw_hit_box(window, bg): Vẽ hitbox
+            update(player, bg): Văng khỏi map khi bị chết.
+    """
     def __init__(self, x, y, w, h):
         """Khởi tạo."""
         self.x = x

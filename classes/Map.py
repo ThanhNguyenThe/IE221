@@ -17,7 +17,19 @@ pygame.init()
 # FPS = 60
 # fpsClock = pygame.time.Clock()
 class Map:
-    """Background Map"""
+    """
+    Background Map
+        Attributes:
+            map_image: pygame image
+            bgX: int
+            time_collide: int
+            block: list of tuples
+        Methods:
+            drawMap(screen): vẽ map từ tọa độ abs(bgX)
+            drawBlock(): vẽ hitbox các block
+            scrollBg(player): trượt background
+            gold_collect(player): render tiền khi chạm block vàng
+    """
     map_image = pygame.image.load(os.path.join("img", "map1.png"))
     bgX = 0 #tọa độ x của map
     time_collide = 100 #số lần nhảy qua của player nên đổi tên khác :(

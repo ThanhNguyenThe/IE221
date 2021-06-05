@@ -6,7 +6,14 @@ from pygame.locals import *
 
 class Flag:
     #tọa độ của flag
-    """Cờ"""
+    """
+    Cờ
+        Attributes:
+            hitBox: tuple
+            score: list
+        Methods:
+            update(player, screen, bg): vẽ và update vị trí của flag
+    """
     hitBox = (6349, 67, 6, 290)
     score = [0]
     def __init__(self):
